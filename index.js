@@ -1,4 +1,4 @@
-var finances = [
+const finances = [
 ['Jan-2010', 867884],
 ['Feb-2010', 984655],
 ['Mar-2010', 322013],
@@ -86,3 +86,78 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+const getTotalNumberOfMonths = () => {
+    const totalNumberOfMonths = finances.length;
+    document.getElementById("totalMonths").innerText = totalNumberOfMonths;
+}
+
+const getNetTotal = () => {
+    let netTotal = 0;
+
+    for(let i = 0; i < finances.length; i++) {
+        netTotal += finances[i][1];
+    }
+
+    document.getElementById("total").innerText = netTotal;
+}
+
+const getAverageOfChanges = () => {
+    let totalChange = 0;
+
+    for (let i = 1; i < finances.length; i++) {
+        let currentMonth = finances[i][1];
+        let previousMonth = finances[i-1][1];
+        let change = currentMonth - previousMonth;
+        totalChange += change;
+    }
+
+    let averageChange = totalChange / (finances.length - 1);
+    document.getElementById("averageChange").innerText = averageChange.toFixed(2);
+}
+
+const getGreatestIncreaseInProfit = () => {
+    let maxIncrease = 0;
+    let maxIncreaseMonth = "";
+
+    for (let i = 1; i < finances.length; i++) {
+        let currentMonth = finances[i][0];
+        let previousMonth = finances[i-1][0];
+        let currentProfit = finances[i][1];
+        let previousProfit = finances[i-1][1];
+        let increase = currentProfit - previousProfit;
+
+        if (increase > maxIncrease) {
+            maxIncrease = increase;
+            maxIncreaseMonth = currentMonth;
+        }
+    }
+
+    document.getElementById("greatestIncrease").innerText = `${maxIncreaseMonth} ($${maxIncrease})`;
+}
+
+const getGreatestDecreaseInProfit = () => {
+    let maxDecrease = 0;
+    let maxDecreaseMonth = "";
+
+    for (let i = 1; i < finances.length; i++) {
+        let currentMonth = finances[i][0];
+        let previousMonth = finances[i-1][0];
+        let currentProfit = finances[i][1];
+        let previousProfit = finances[i-1][1];
+        let decrease = currentProfit - previousProfit;
+
+        if (decrease < maxDecrease) {
+            maxDecrease = decrease;
+            maxDecreaseMonth = currentMonth;
+        }
+    }
+
+    document.getElementById("greatestDecrease").innerText = `${maxDecreaseMonth} ($${maxDecrease})`;
+}
+
+getTotalNumberOfMonths();
+getNetTotal();
+getAverageOfChanges();
+getGreatestIncreaseInProfit();
+getGreatestDecreaseInProfit();
